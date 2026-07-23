@@ -57,7 +57,25 @@ const POINTS_PER_MATCH = 20;
 const LEADERBOARD_LIMIT = 10;
 const NICKNAME_INTERVAL_MS = 60_000;
 const LEADERBOARD_INTERVAL_MS = 5 * 60_000;
-const DATABASE_PATH = process.env.DATABASE_PATH || path.join(__dirname, 'league.db');
+function resolveDatabasePath() {
+  const requestedPath = process.env.DATABASE_PATH || path.join(__dirname, 'league.db');
+
+  try {
+    const directory = path.dirname(requestedPath);
+    require('node:fs').mkdirSync(directory, { recursive: true });
+    require('node:fs').accessSync(directory, require('node:fs').constants.W_OK);
+    return requestedPath;
+  } catch (error) {
+    const fallbackPath = path.join(__dirname, 'league.db');
+    console.warn(
+      `Could not use DATABASE_PATH "${requestedPath}". Falling back to "${fallbackPath}".`,
+      error.message
+    );
+    return fallbackPath;
+  }
+}
+
+const DATABASE_PATH = resolveDatabasePath();
 
 const RANKS = [
   { name: 'Bronze', min: 0, max: 199, emoji: '🥉', roleId: process.env.BRONZE_ROLE_ID },

@@ -132,3 +132,19 @@ The bot automatically registers its slash commands and creates or refreshes its 
 - `/removepoints`
 
 Never upload your real Discord token to GitHub.
+
+## Railway healthcheck fix
+
+The bot now automatically creates the database directory. If `/data` is not mounted or writable, it falls back to a local `league.db` instead of crashing.
+
+For permanent storage, mount a Railway Volume at `/data` and set:
+
+```env
+DATABASE_PATH=/data/league.db
+```
+
+For an immediate deployment without a volume, set:
+
+```env
+DATABASE_PATH=league.db
+```

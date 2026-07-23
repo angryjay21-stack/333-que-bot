@@ -1,0 +1,19 @@
+{
+  "name": "333-pvp-league-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Premium 333 PVP ranked league, queue, matchmaking and leaderboard Discord bot",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "check": "node --check index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "discord.js": "^14.19.3"
+  }
+}
